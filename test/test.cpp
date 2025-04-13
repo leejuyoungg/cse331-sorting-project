@@ -19,12 +19,11 @@ void run_time_test() {
     // 헤더 출력
     cout << left << setw(18) << "Input Type"
          << setw(12) << "Size"
-         << setw(18) << "Avg Time (ms)"
-         << setw(22) << "Std Deviation (ms)" << endl;
+         << setw(18) << "Avg Time (ms)" << endl;
     cout << string(70, '-') << endl;
 
     for (int size : sizes) {
-        int repetitions = (size == 1000000) ? 1 : 10;
+        int repetitions = 10;
 
         for (const string& type : input_types) {
             long long durations[10] = {};
@@ -45,7 +44,7 @@ void run_time_test() {
                 }
 
                 auto start = chrono::high_resolution_clock::now();
-                quick_sort(arr, 0, size - 1);
+                selection_sort(arr, size);
                 auto end = chrono::high_resolution_clock::now();
                 
                 durations[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();
@@ -63,14 +62,11 @@ void run_time_test() {
             double variance = 0.0;
             for (int i = 0; i < repetitions; i++) {
                 variance += (durations[i] - average_time) * (durations[i] - average_time);
-            }
-
-            double standard_deviation = sqrt(variance / repetitions);
+            };
 
             cout << left << setw(18) << type
                  << setw(12) << size
-                 << setw(18) << fixed << setprecision(2) << average_time
-                 << setw(22) << fixed << setprecision(2) << standard_deviation << endl;
+                 << setw(18) << fixed << setprecision(2) << average_time << endl;
         }
     }
 }

@@ -21,6 +21,8 @@ int main() {
     int* arr8 = generate_random_array(size, seed);
     int* arr9 = generate_random_array(size, seed);
     int* arr10 = generate_random_array(size, seed);
+    int* arr11 = generate_random_array(size, seed);
+    int* arr12 = generate_random_array(size, seed);
 
     merge_sort(arr1, 0, size - 1);
     heap_sort(arr2, 0, size);
@@ -32,6 +34,8 @@ int main() {
     comb_sort(arr8, size);
     tim_sort(arr9, size);
     introsort(arr10, 0, size);
+    library_sort(arr11, size);
+    tournament_sort(arr12, size);
  
     assert(is_sorted(arr1, size, ASCENDING));
     assert(is_sorted(arr2, size, ASCENDING));
@@ -43,6 +47,8 @@ int main() {
     assert(is_sorted(arr8, size, ASCENDING));
     assert(is_sorted(arr9, size, ASCENDING));
     assert(is_sorted(arr10, size, ASCENDING));
+    assert(is_sorted(arr11, size, ASCENDING));
+    assert(is_sorted(arr12, size, ASCENDING));
 
     delete [] arr1;
     delete [] arr2;
@@ -54,4 +60,6 @@ int main() {
     delete [] arr8;
     delete [] arr9;
     delete [] arr10;
+    delete [] arr11;
+    delete [] arr12;
 }

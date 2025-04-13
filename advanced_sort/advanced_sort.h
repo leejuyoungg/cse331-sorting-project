@@ -6,4 +6,6 @@ void cocktail_shaker_sort(int* arr, int size);
 void comb_sort(int* arr, int size);
 void tim_sort(int* arr, int size);
 void introsort(int* arr, int f, int b);
+void library_sort(int* arr, int size);
+void tournament_sort(int* arr, int size);
 #endif

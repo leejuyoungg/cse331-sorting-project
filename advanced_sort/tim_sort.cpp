@@ -65,9 +65,9 @@ void tim_sort(int* arr, int size) {
 
     int i = 0;
     while (i + 1 < size) {
-        is_ascending = arr[i] <= arr[i + 1]; // 등호 붙일지 말지 고민
+        is_ascending = arr[i] <= arr[i + 1];
         int start_index = i;
-        int probe_index = i + 1; /* i + 2를 i + 1로 바꿈*/
+        int probe_index = i + 1;
         run_starts.push_back(start_index);
         if (is_ascending) {
             for (int k = probe_index; (k - start_index + 1 < run_size) && (k < size); k++) {
@@ -126,18 +126,6 @@ void tim_sort(int* arr, int size) {
                     break;
                 }
             }
-            /*if (probe_index >= size) {
-                for (int k = 0; k <= size - 1; k++) {
-                    std::cout << arr[k] << " ";
-                }
-                std::cout << "\n";
-            }
-            else {
-                for (int k = 0; k <= probe_index; k++) {
-                    std::cout << arr[k] << " ";
-                }
-                std::cout << "\n";
-            }*/
             if (probe_index >= size) {
                 binary_insertion_sort(arr, start_index, size - 1);
             }
@@ -145,32 +133,11 @@ void tim_sort(int* arr, int size) {
                 binary_insertion_sort(arr, start_index, probe_index);
             }
         }
-        /*if (probe_index >= size) {
-            for (int k = 0; k <= size - 1; k++) {
-                std::cout << arr[k] << " ";
-            }
-            std::cout << "\n";
-        }
-        else {
-            for (int k = 0; k <= probe_index; k++) {
-                std::cout << arr[k] << " ";
-            }
-            std::cout << "\n";
-        }*/
         i = probe_index + 1;
 
     }
-    //std::cout << "insertion done" << std::endl;
     for (std::size_t k = 1; k < run_starts.size() - 1; k++) {
         merge_for_tim(arr, 0, run_starts[k] - 1, run_starts[k + 1] - 1);
-        /*for (int k = 0; k < size; k++) {
-            std::cout << arr[k] << " ";
-        }
-        std::cout << "\n";*/
     }
     merge_for_tim(arr, 0, run_starts[run_starts.size() - 1] - 1, size - 1);
-    /*for (int k = 0; k < size; k++) {
-        std::cout << arr[k] << " ";
-    }
-    std::cout << "\n";*/
 }
