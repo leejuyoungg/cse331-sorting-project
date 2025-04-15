@@ -14,7 +14,7 @@ using namespace std;
 void run_time_test() {
     const int sizes[] = {1000, 10000, 100000, 1000000};
     const unsigned int seed = 42;
-    const string input_types[] = {"random", "ascending", "descending", "reverse", "partially_sorted"};
+    const string input_types[] = {"random", "ascending", "descending", "partially_sorted"};
 
     // 헤더 출력
     cout << left << setw(18) << "Input Type"
@@ -37,14 +37,12 @@ void run_time_test() {
                     arr = generate_ascending_sorted_array(size, seed);
                 } else if (type == "descending") {
                     arr = generate_descending_sorted_array(size, seed);
-                } else if (type == "reverse") {
-                    arr = generate_reverse_sorted_array(size, seed);
                 } else if (type == "partially_sorted") {
                     arr = generate_partially_sorted_array(size, seed, 100, 200);
                 }
 
                 auto start = chrono::high_resolution_clock::now();
-                cocktail_shaker_sort(arr, size); /*측정하고자 하는 정렬 알고리즘 넣기*/
+                comb_sort(arr, size); /*측정하고자 하는 정렬 알고리즘 넣기*/
                 auto end = chrono::high_resolution_clock::now();
                 
                 durations[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();
