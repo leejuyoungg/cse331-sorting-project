@@ -44,7 +44,7 @@ void run_time_test() {
                 }
 
                 auto start = chrono::high_resolution_clock::now();
-                selection_sort(arr, size);
+                cocktail_shaker_sort(arr, size); /*측정하고자 하는 정렬 알고리즘 넣기*/
                 auto end = chrono::high_resolution_clock::now();
                 
                 durations[i] = chrono::duration_cast<chrono::milliseconds>(end - start).count();

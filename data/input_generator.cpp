@@ -38,7 +38,7 @@ int* generate_reverse_sorted_array(int size, unsigned int seed, int min_value = 
 
 int* generate_partially_sorted_array(int size, unsigned int seed, int sorted_start_index, int sorted_end_index, int min_value = 0, int max_value = 999) {
     int* arr = generate_random_array(size, seed, min_value, max_value);
-    // 범위 방어어
+    // 범위 방어
     if (sorted_start_index < 0) sorted_start_index = 0;
     if (sorted_end_index >= size) sorted_end_index = size - 1;
 
