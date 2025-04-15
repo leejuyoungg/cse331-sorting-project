@@ -58,72 +58,32 @@ void tim_sort(std::vector<std::pair<int, int>>& arr) {
 
     int i = 0;
     while (i < size) {
-        bool is_ascending = true;
-        if (i + 1 < size)
-            is_ascending = arr[i].first <= arr[i + 1].first;
+        int start = i;
+        int end = std::min(i + RUN - 1, size - 1);
 
-        int start_index = i;
-        int probe_index = i + 1;
+        binary_insertion_sort(arr, start, end);
+        run_starts.push_back(start);
 
-        run_starts.push_back(start_index);
-
-        // Extend short run via binary insertion sort (<= RUN size)
-        for (int k = probe_index; (k - start_index + 1 < RUN) && (k < size); ++k) {
-            probe_index = k;
-            auto key = arr[k];
-            int left = start_index;
-            int right = k - 1;
-
-            while (left <= right) {
-                int mid = (left + right) / 2;
-                if (is_ascending) {
-                    if (arr[mid].first > key.first)
-                        right = mid - 1;
-                    else
-                        left = mid + 1;
-                } else {
-                    if (arr[mid].first < key.first)
-                        right = mid - 1;
-                    else
-                        left = mid + 1;
-                }
-            }
-
-            for (int j = k - 1; j >= left; --j)
-                arr[j + 1] = arr[j];
-            arr[left] = key;
-        }
-
-        // Scan rest of the natural run
-        while (probe_index + 1 < size) {
-            if (is_ascending) {
-                if (arr[probe_index].first <= arr[probe_index + 1].first)
-                    ++probe_index;
-                else
-                    break;
-            } else {
-                if (arr[probe_index].first >= arr[probe_index + 1].first)
-                    ++probe_index;
-                else
-                    break;
-            }
-        }
-
-        // If descending, reverse the run
-        if (!is_ascending) {
-            std::reverse(arr.begin() + start_index, arr.begin() + probe_index + 1);
-        }
-
-        // Binary insertion sort on entire run
-        binary_insertion_sort(arr, start_index, probe_index);
-
-        i = probe_index + 1;
+        i = end + 1;
     }
 
     // Merge runs pairwise
-    for (std::size_t k = 1; k + 1 < run_starts.size(); ++k)
-        merge_for_tim(arr, 0, run_starts[k] - 1, run_starts[k + 1] - 1);
+    while (run_starts.size() > 1) {
+        std::vector<int> new_run_starts;
 
-    if (!run_starts.empty())
-        merge_for_tim(arr, 0, run_starts.back() - 1, size - 1);
+        for (size_t i = 0; i + 1 < run_starts.size(); i += 2) {
+            int start = run_starts[i];
+            int mid = run_starts[i + 1] - 1;
+            int end = (i + 2 < run_starts.size()) ? run_starts[i + 2] - 1 : size - 1;
+
+            merge_for_tim(arr, start, mid, end);
+            new_run_starts.push_back(start);
+        }
+
+        if (run_starts.size() % 2 == 1) {
+            new_run_starts.push_back(run_starts.back());
+        }
+
+        run_starts = new_run_starts;
+    }
 }
